@@ -11,6 +11,9 @@ import android.view.MenuItem;
 
 import com.example.administrator.fuckgank.R;
 import com.example.administrator.fuckgank.base.BaseActivity;
+import com.example.administrator.fuckgank.ui.category.CategoryFragment;
+import com.example.administrator.fuckgank.ui.exciting.ExcitingFragment;
+import com.example.administrator.fuckgank.ui.search.SearchActivity;
 import com.example.administrator.fuckgank.ui.today.TodayFragment;
 
 import butterknife.BindView;
@@ -48,6 +51,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId){
+            case R.id.nav_today:
+                replaceFragment(R.id.fragment_container, TodayFragment.newInstance(), TodayFragment.TAG);
+                break;
+            case R.id.nav_android:
+                replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.Android), CategoryFragment.Android);
+                break;
+            case R.id.nav_ios:
+                replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.iOS), CategoryFragment.iOS);
+                break;
+            case R.id.nav_front_end:
+                replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.front), CategoryFragment.front);
+                break;
+            case R.id.nav_video:
+                replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.video), CategoryFragment.video);
+                break;
+            case R.id.nav_welfare:
+                replaceFragment(R.id.fragment_container, ExcitingFragment.newInstance(), ExcitingFragment.TAG);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -69,7 +94,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
-            // // TODO: 2016/12/25 0025 启动搜索功能
+            SearchActivity.start(this);
         }
         return super.onOptionsItemSelected(item);
     }

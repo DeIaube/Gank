@@ -9,6 +9,14 @@ import java.util.List;
 
 public class GankDayItem {
 
+    @Override
+    public String toString() {
+        return "GankDayItem{" +
+                "error=" + error +
+                ", results=" + results +
+                ", category=" + category +
+                '}';
+    }
 
     /**
      * category : ["瞎推荐","前端","休息视频","App","Android","福利","iOS"]
@@ -52,6 +60,20 @@ public class GankDayItem {
         private List<前端Bean> 前端;
         private List<瞎推荐Bean> 瞎推荐;
         private List<福利Bean> 福利;
+        private List<拓展资源Bean> 拓展资源;
+
+        @Override
+        public String toString() {
+            return "ResultsBean{" +
+                    "Android=" + Android +
+                    ", App=" + App +
+                    ", iOS=" + iOS +
+                    ", 休息视频=" + 休息视频 +
+                    ", 前端=" + 前端 +
+                    ", 瞎推荐=" + 瞎推荐 +
+                    ", 福利=" + 福利 +
+                    '}';
+        }
 
         public List<AndroidBean> getAndroid() {
             return Android;
@@ -59,6 +81,15 @@ public class GankDayItem {
 
         public void setAndroid(List<AndroidBean> Android) {
             this.Android = Android;
+        }
+
+
+        public void set拓展资源(List<拓展资源Bean> 拓展资源) {
+            this.拓展资源 = 拓展资源;
+        }
+
+        public List<拓展资源Bean> get拓展资源() {
+            return 拓展资源;
         }
 
         public List<AppBean> getApp() {
@@ -129,53 +160,83 @@ public class GankDayItem {
 
         public static class 福利Bean extends BaseBean{
         }
+
+        public static class 拓展资源Bean extends BaseBean{
+        }
     }
 
 
     public List<BaseBean> getGankList(){
-        List<ResultsBean.福利Bean> 福利 = results.get福利();
-        List<ResultsBean.AndroidBean> android = results.getAndroid();
-        List<ResultsBean.IOSBean> ios = results.getIOS();
-        List<ResultsBean.AppBean> app = results.getApp();
-        List<ResultsBean.前端Bean> 前端 = results.get前端();
-        List<ResultsBean.瞎推荐Bean> 瞎推荐 = results.get瞎推荐();
-        List<ResultsBean.休息视频Bean> 休息视频 = results.get休息视频();
+        List<ResultsBean.福利Bean> 福利 = results.get福利() == null ? new ArrayList<ResultsBean.福利Bean>() : results.get福利();
+        List<ResultsBean.AndroidBean> android = results.getAndroid() == null ? new ArrayList<ResultsBean.AndroidBean>() : results.getAndroid();
+        List<ResultsBean.IOSBean> ios = results.getIOS() == null ? new ArrayList<ResultsBean.IOSBean>() : results.getIOS();
+        List<ResultsBean.AppBean> app = results.getApp() == null ? new ArrayList<ResultsBean.AppBean>() : results.getApp();
+        List<ResultsBean.前端Bean> 前端 = results.get前端() == null ? new ArrayList<ResultsBean.前端Bean>() : results.get前端();
+        List<ResultsBean.瞎推荐Bean> 瞎推荐 = results.get瞎推荐() == null ? new ArrayList<ResultsBean.瞎推荐Bean>() : results.get瞎推荐();
+        List<ResultsBean.休息视频Bean> 休息视频 = results.get休息视频() == null ? new ArrayList<ResultsBean.休息视频Bean>() : results.get休息视频();
+        List<ResultsBean.拓展资源Bean> 拓展资源 = results.get拓展资源() == null ? new ArrayList<ResultsBean.拓展资源Bean>() : results.get拓展资源();
         List<BaseBean> result = new ArrayList<>();
+
+
         BaseBean titleBean = null;
 
         titleBean = new BaseBean();
         titleBean.setUrl(福利.get(0).getUrl());
         result.add(titleBean);
 
+
         titleBean = new BaseBean();
         titleBean.setDesc("Android");
-        result.add(titleBean);
+        if(!android.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(android);
+
 
         titleBean = new BaseBean();
         titleBean.setDesc("iOS");
-        result.add(titleBean);
+        if(!ios.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(ios);
+
 
         titleBean = new BaseBean();
         titleBean.setDesc("App");
-        result.add(titleBean);
+        if(!app.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(app);
+
 
         titleBean = new BaseBean();
         titleBean.setDesc("前端");
-        result.add(titleBean);
+        if(!前端.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(前端);
 
         titleBean = new BaseBean();
+        titleBean.setDesc("拓展资源");
+        if(!拓展资源.isEmpty()){
+            result.add(titleBean);
+        }
+        result.addAll(拓展资源);
+
+        titleBean = new BaseBean();
         titleBean.setDesc("瞎推荐");
-        result.add(titleBean);
+        if(!瞎推荐.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(瞎推荐);
 
         titleBean = new BaseBean();
         titleBean.setDesc("休息视频");
-        result.add(titleBean);
+        if(!休息视频.isEmpty()){
+            result.add(titleBean);
+        }
         result.addAll(休息视频);
+
 
         return result;
     }

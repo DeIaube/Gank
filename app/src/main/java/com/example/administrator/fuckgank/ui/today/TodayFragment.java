@@ -1,14 +1,12 @@
 package com.example.administrator.fuckgank.ui.today;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.administrator.fuckgank.R;
-import com.example.administrator.fuckgank.adapter.GankListAdapter;
+import com.example.administrator.fuckgank.adapter.GankTodayListAdapter;
 import com.example.administrator.fuckgank.base.BaseFragment;
 import com.example.administrator.fuckgank.bean.BaseBean;
 import com.example.administrator.fuckgank.ui.WebViewActivity;
@@ -21,14 +19,14 @@ import butterknife.BindView;
  * Created by Administrator on 2016/12/26 0026.
  */
 
-public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, TodyContract.View, GankListAdapter.OnItemClickListener {
+public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, TodyContract.View, GankTodayListAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
-    GankListAdapter adapter;
+    GankTodayListAdapter adapter;
 
     TodyContract.Presenter presenter;
 
@@ -44,24 +42,13 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        adapter = new GankListAdapter(getActivity());
+        adapter = new GankTodayListAdapter(getActivity());
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         presenter = new TodayPresenter(this);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
-    }
 
 
     public static TodayFragment newInstance(){

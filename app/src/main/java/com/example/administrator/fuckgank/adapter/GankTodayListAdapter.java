@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016/12/26 0026.
  */
 
-public class GankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GankTodayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
@@ -41,7 +41,7 @@ public class GankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         BaseBean baseBean = data.get(position);
-        if(baseBean.get_id() != null){
+        if(baseBean.getUrl() != null && baseBean.getDesc() != null){
             return VIEW_TYPE_NORMAL;
         }else if(baseBean.getDesc() != null){
             return VIEW_TYPE_TITLE;
@@ -55,7 +55,7 @@ public class GankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.onItemClickListener = onItemClickListener;
     }
 
-    public GankListAdapter(Context context) {
+    public GankTodayListAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         data = new ArrayList<>();
@@ -151,7 +151,7 @@ public class GankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     static class ExcitingHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.girl_image)
+        @BindView(R.id.exciting_pic)
         ImageView excitingView;
 
         public ExcitingHolder(View itemView) {

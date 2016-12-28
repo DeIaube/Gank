@@ -1,14 +1,12 @@
-package com.example.administrator.fuckgank.ui.today;
+package com.example.administrator.fuckgank.ui.search;
 
 import com.example.administrator.fuckgank.bean.BaseBean;
-import com.example.administrator.fuckgank.bean.DateData;
-import com.example.administrator.fuckgank.bean.GankDayItem;
+import com.example.administrator.fuckgank.bean.SearchBean;
 import com.example.administrator.fuckgank.network.GankApi;
 import com.example.administrator.fuckgank.network.GankRequest;
 
 import java.util.List;
 
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -18,33 +16,23 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2016/12/26 0026.
  */
 
-public class TodayPresenter extends TodyContract.Presenter {
+public class SearchPresenter extends SearchContract.Presenter {
 
-    public TodayPresenter(TodyContract.View view) {
+    public SearchPresenter(SearchContract.View view) {
         super(view);
-
     }
 
     @Override
-    protected void refreshData() {
-        final GankApi gankApi = GankRequest.getSingle().getGankApi();
+    protected void search(String query) {
         view.showProgress();
-        gankApi.getDateHistory()
+        GankApi gankApi = GankRequest.getSingle().getGankApi();
+        gankApi.getSearchData(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .flatMap(new Func1<DateData, Observable<GankDayItem>>() {
+                .map(new Func1<SearchBean, List<BaseBean>>() {
                     @Override
-                    public Observable<GankDayItem> call(DateData dateData) {
-                        DateData.GankData newDate = dateData.getNewDate();
-                        return gankApi.getGankDayData(newDate.getYear(), newDate.getMonth(), newDate.getDay());
-                    }
-                })
-                .observeOn(Schedulers.io())
-                .map(new Func1<GankDayItem, List<BaseBean>>() {
-                    @Override
-                    public List<BaseBean> call(GankDayItem gankDayItem) {
-                        List<BaseBean> result = gankDayItem.getGankList();
-                        return result;
+                    public List<BaseBean> call(SearchBean searchBean) {
+                        return searchBean.getGankList();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,7 +52,6 @@ public class TodayPresenter extends TodyContract.Presenter {
 
     @Override
     protected void start() {
-        refreshData();
-    }
 
+    }
 }

@@ -19,21 +19,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--
-     wrap SwipeRefreshLayout in FrameLayout to fix this issue
-     switch fragment with SwipeRefreshLayout during refreshing, fragment freezes but actually still work.
-    -->
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
 </FrameLayout>
