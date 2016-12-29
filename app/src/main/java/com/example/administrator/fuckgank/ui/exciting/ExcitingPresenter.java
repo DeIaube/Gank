@@ -26,7 +26,42 @@ public class ExcitingPresenter extends ExcitingContract.Presenter {
 
     @Override
     protected void loadMore() {
+        view.showProgress();
+        GankRequest.getSingle().getGankApi()
+                .getCategoryData("福利", ++currentIndex)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map(new Func1<CategoryBean, List<BaseBean>>() {
+                    @Override
+                    public List<BaseBean> call(CategoryBean categoryBean) {
+                        return categoryBean.getGankList();
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .map(new Func1<List<BaseBean>, List<String>>() {
+                    @Override
+                    public List<String> call(List<BaseBean> baseBeen) {
+                        List<String> urls = new ArrayList<String>(baseBeen.size());
+                        for (BaseBean baseBean : baseBeen) {
+                            urls.add(baseBean.getUrl());
+                        }
+                        return urls;
+                    }
 
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> urls) {
+                        view.hideProgress();
+                        view.loadMoreUi(urls);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        view.hideProgress();
+                    }
+                });
     }
 
     @Override

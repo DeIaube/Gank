@@ -20,10 +20,8 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016/12/28 0028.
  */
 
-public class ExcitingPictureAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ExcitingPictureAdapter extends RecyclerView.Adapter<ExcitingPictureAdapter.PictureViewHolder> {
 
-    public static final int VIEW_TYPE_NORMAL = 1;
-    public static final int VIEW_TYPE_LOAD = 2;
 
     private Context context;
     private LayoutInflater inflater;
@@ -36,48 +34,34 @@ public class ExcitingPictureAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    @Override
-    public int getItemViewType(int position) {
-        if(position == urls.size()){
-            return VIEW_TYPE_LOAD;
-        }
-        return VIEW_TYPE_NORMAL;
-    }
-
     public void refresh(List<String> urls){
         this.urls = urls;
         notifyDataSetChanged();
     }
 
-    public void loadMore(List<String> urls){
-        this.urls.addAll(urls);
+    public void loadMore(List<String> data){
+        this.urls.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_NORMAL){
-            return new PictureViewHolder(inflater.inflate(R.layout.recycler_item_girl_imge, parent,false));
-        }else{
-            return new LoadHolder(inflater.inflate(R.layout.recycler_item_progress, parent, false));
-        }
+    public PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new PictureViewHolder(inflater.inflate(R.layout.recycler_item_girl_imge, parent,false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof PictureViewHolder){
-            PictureViewHolder pictureViewHolder = (PictureViewHolder) holder;
-            Glide.with(context)
-                    .load(urls.get(position))
-                    .placeholder(R.color.imageColorPlaceholder)
-                    .centerCrop()
-                    .into(((PictureViewHolder) holder).iv);
-        }
+    public void onBindViewHolder(PictureViewHolder holder, int position) {
+        Glide.with(context)
+                .load(urls.get(position))
+                .placeholder(R.color.imageColorPlaceholder)
+                .centerCrop()
+                .into(( holder).iv);
     }
+
 
     @Override
     public int getItemCount() {
-        return urls.isEmpty() ? 0 : urls.size() + 1;
+        return urls.size();
     }
 
     static class PictureViewHolder extends RecyclerView.ViewHolder{
@@ -89,10 +73,4 @@ public class ExcitingPictureAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    static class LoadHolder extends RecyclerView.ViewHolder{
-
-        public LoadHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }

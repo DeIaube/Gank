@@ -15,15 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */-->
-<FrameLayout
+<android.support.v7.widget.CardView android:layout_margin="4dp"
+    app:cardElevation="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/exciting_pic"
         android:layout_width="match_parent"
         android:layout_height="303dp"
         />
-</FrameLayout>
+</android.support.v7.widget.CardView>

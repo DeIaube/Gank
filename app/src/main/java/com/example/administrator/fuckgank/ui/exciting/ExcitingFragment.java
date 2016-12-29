@@ -55,7 +55,7 @@ public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 boolean reachBottom = mLayoutManager.findLastCompletelyVisibleItemPosition()
-                        >= mLayoutManager.getItemCount() - 1;
+                        >= mLayoutManager.getItemCount() - 2;
 
                 if(newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadingMore && reachBottom) {
                     mLoadingMore = true;
@@ -67,7 +67,7 @@ public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 boolean reachBottom = mLayoutManager.findLastCompletelyVisibleItemPosition()
-                        >= mLayoutManager.getItemCount() - 1;
+                        >= mLayoutManager.getItemCount() - 2;
                 if(!mLoadingMore && reachBottom) {
                     mLoadingMore = true;
                     loadMore();
