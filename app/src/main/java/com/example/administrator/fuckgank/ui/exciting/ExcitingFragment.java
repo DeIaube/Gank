@@ -4,11 +4,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.administrator.fuckgank.R;
 import com.example.administrator.fuckgank.adapter.ExcitingPictureAdapter;
 import com.example.administrator.fuckgank.base.BaseFragment;
+import com.example.administrator.fuckgank.ui.ShowExcitingActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,7 +20,7 @@ import butterknife.BindView;
  * Created by Administrator on 2016/12/28 0028.
  */
 
-public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ExcitingContract.View {
+public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ExcitingContract.View, ExcitingPictureAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -78,6 +81,7 @@ public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout
 
         adapter = new ExcitingPictureAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
         presenter = new ExcitingPresenter(this);
     }
 
@@ -111,4 +115,8 @@ public class ExcitingFragment extends BaseFragment implements SwipeRefreshLayout
         adapter.loadMore(urls);
     }
 
+    @Override
+    public void onClickExcitingItem(View view, List<String> urls, int index) {
+        ShowExcitingActivity.start(getActivity(), (ArrayList<String>) urls, index);
+    }
 }

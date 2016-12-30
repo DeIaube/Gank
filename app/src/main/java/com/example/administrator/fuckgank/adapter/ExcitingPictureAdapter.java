@@ -26,6 +26,8 @@ public class ExcitingPictureAdapter extends RecyclerView.Adapter<ExcitingPicture
     private Context context;
     private LayoutInflater inflater;
     private List<String> urls;
+    private OnItemClickListener onItemClickListener;
+
 
     public ExcitingPictureAdapter(Context context) {
         this.context = context;
@@ -44,18 +46,30 @@ public class ExcitingPictureAdapter extends RecyclerView.Adapter<ExcitingPicture
         notifyDataSetChanged();
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @Override
     public PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new PictureViewHolder(inflater.inflate(R.layout.recycler_item_girl_imge, parent,false));
     }
 
     @Override
-    public void onBindViewHolder(PictureViewHolder holder, int position) {
+    public void onBindViewHolder(PictureViewHolder holder, final int position) {
         Glide.with(context)
                 .load(urls.get(position))
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
                 .into(( holder).iv);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClickListener != null){
+                    onItemClickListener.onClickExcitingItem(view, urls, position);
+                }
+            }
+        });
     }
 
 
@@ -73,4 +87,8 @@ public class ExcitingPictureAdapter extends RecyclerView.Adapter<ExcitingPicture
         }
     }
 
+
+    public interface OnItemClickListener{
+        void onClickExcitingItem(View view, List<String> urls, int index);
+    }
 }

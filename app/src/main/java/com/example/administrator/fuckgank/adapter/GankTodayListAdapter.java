@@ -74,7 +74,7 @@ public class GankTodayListAdapter extends RecyclerView.Adapter<RecyclerView.View
             case VIEW_TYPE_TITLE:
                 return new TitleHolder(inflater.inflate(R.layout.recycler_item_category_title, parent, false));
             case VIEW_TYPE_EXCITING:
-                return new ExcitingHolder(inflater.inflate(R.layout.recycler_item_girl_imge, parent, false));
+                return new ExcitingHolder(inflater.inflate(R.layout.recycler_item_today_girl_imge, parent, false));
         }
         return new NormalHolder(inflater.inflate(R.layout.recycler_item_gank, parent, false));
     }
@@ -151,7 +151,7 @@ public class GankTodayListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     static class ExcitingHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.exciting_pic)
+        @BindView(R.id.pic)
         ImageView excitingView;
 
         public ExcitingHolder(View itemView) {
