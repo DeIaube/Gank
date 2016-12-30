@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         navView.setNavigationItemSelectedListener(this);
         replaceFragment(R.id.fragment_container, TodayFragment.newInstance(), TodayFragment.TAG);
+
     }
 
     @Override
@@ -57,21 +58,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (itemId){
             case R.id.nav_today:
                 replaceFragment(R.id.fragment_container, TodayFragment.newInstance(), TodayFragment.TAG);
+                setTitle("今日精选");
                 break;
             case R.id.nav_android:
                 replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.Android), CategoryFragment.Android);
+                setTitle(CategoryFragment.Android);
                 break;
             case R.id.nav_ios:
                 replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.iOS), CategoryFragment.iOS);
+                setTitle(CategoryFragment.iOS);
                 break;
             case R.id.nav_front_end:
                 replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.front), CategoryFragment.front);
+                setTitle(CategoryFragment.front);
                 break;
             case R.id.nav_video:
                 replaceFragment(R.id.fragment_container, CategoryFragment.newInstance(CategoryFragment.video), CategoryFragment.video);
+                setTitle(CategoryFragment.video);
                 break;
             case R.id.nav_welfare:
                 replaceFragment(R.id.fragment_container, ExcitingFragment.newInstance(), ExcitingFragment.TAG);
+                setTitle("福利");
                 break;
             case R.id.nav_about:
                 showAboutMessage();
@@ -115,6 +122,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             SearchActivity.start(this);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setTitle(String title){
+        toolbar.setTitle(title);
     }
 
 }
